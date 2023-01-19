@@ -15,7 +15,7 @@ const Login: NextPage = () => {
       setPassword("");
     } else {
       // TODO - Form validation
-      setPassword("");
+      setPassword("Hello You");
     }
   }
 
