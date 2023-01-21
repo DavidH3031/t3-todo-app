@@ -1,20 +1,51 @@
+import type { User } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { auth } from "../server/auth";
+import { useRouter } from "next/router";
+import { prisma } from "../server/db";
+
+async function createPrismaUser(fbUser: User) {
+  console.log("dbdbdbdb");
+  const user = await prisma.user.create({
+    data: {
+      id: fbUser.uid,
+      email: fbUser.email,
+      name: fbUser.displayName,
+    },
+  });
+  console.log(user);
+}
 
 const Signup: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
+  const router = useRouter();
 
   function handleSignup(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (password === confPassword) {
       console.log(email, password, confPassword);
       // TODO - Implement regristration
-      setEmail("");
-      setPassword("");
-      setConfPassword("");
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCred) => {
+          const user = userCred.user;
+          createPrismaUser(userCred.user).catch((err) => {
+            console.log(err);
+          });
+          return updateProfile(user, { displayName: "David" });
+        })
+        .then(() => {
+          router.push("/list").catch((err) => {
+            console.log(err);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       // TODO - Form validation
       setPassword("");

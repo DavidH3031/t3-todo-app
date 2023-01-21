@@ -1,6 +1,8 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { auth } from "../server/auth";
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -8,9 +10,16 @@ const Login: NextPage = () => {
 
   function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (email && password) {
+    if (email != "" && password != "") {
       console.log(email, password);
       // TODO - Implement regristration
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCred) => {
+          console.log(userCred.user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       setEmail("");
       setPassword("");
     } else {
