@@ -24,7 +24,7 @@ model User {
 }
 
 model TodoObject {
-  authorId  Int      @id
+  Id  String      @id @default(uuid())
   createdAt DateTime @default(now())
   subject   String
   task      String

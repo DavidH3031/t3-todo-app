@@ -1,25 +1,18 @@
-import { type NextPage } from "next";
+import type { TodoObject } from "@prisma/client";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TodoCard from "../../components/TodoCard";
-import { auth } from "../../server/auth";
 
-const List: NextPage = () => {
-  const [todos, setTodos] = useState([]);
-
-  useEffect(() => {
-    if (auth.currentUser) {
-      const user = prisma?.user
-        .findUnique({
-          where: {
-            id: auth.currentUser.uid,
-          },
-        })
-        .then((user) => {
-          // setTodos(user?.todos);
-        });
-    }
-  }, []);
+export async function getServerSideProps() {
+  const todoListObjs = await prisma.todoObject.findMany();
+  return {
+    props: {
+      initialTodos: todoListObjs,
+    },
+  };
+}
+export default function List({ initialTodos }) {
+  const [todos, setTodos] = useState<TodoObject[]>(initialTodos);
   return (
     <>
       <Head>
@@ -36,10 +29,16 @@ const List: NextPage = () => {
             Your Todo List
           </h1>
         </div>
-        <TodoCard />
+        {todos.map((todo) => {
+          return (
+            <TodoCard
+              key={todo.authorId}
+              subject={todo.subject}
+              task={todo.task}
+            />
+          );
+        })}
       </main>
     </>
   );
-};
-
-export default List;
+}

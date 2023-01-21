@@ -5,19 +5,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { auth } from "../server/auth";
 import { useRouter } from "next/router";
-import { prisma } from "../server/db";
-
-async function createPrismaUser(fbUser: User) {
-  console.log("dbdbdbdb");
-  const user = await prisma.user.create({
-    data: {
-      id: fbUser.uid,
-      email: fbUser.email,
-      name: fbUser.displayName,
-    },
-  });
-  console.log(user);
-}
+import { createPrismaUser } from "../server/apiConnection/api";
 
 const Signup: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -28,20 +16,19 @@ const Signup: NextPage = () => {
   function handleSignup(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (password === confPassword) {
-      console.log(email, password, confPassword);
-      // TODO - Implement regristration
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCred) => {
           const user = userCred.user;
-          createPrismaUser(userCred.user).catch((err) => {
-            console.log(err);
-          });
-          return updateProfile(user, { displayName: "David" });
+          updateProfile(user, { displayName: "David" })
+            .then(() => {
+              return createPrismaUser(userCred);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .then(() => {
-          router.push("/list").catch((err) => {
-            console.log(err);
-          });
+          return router.push("/list");
         })
         .catch((err) => {
           console.log(err);
