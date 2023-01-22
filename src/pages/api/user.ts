@@ -8,12 +8,16 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { uid, email, displayName } = JSON.parse(req.body);
-    const user = await prisma.user.create({
-      data: {
-        id: uid,
+    console.log("req.body", req.body);
+    const { email, name } = JSON.parse(req.body);
+    const user = await prisma.user.upsert({
+      where: {
         email: email,
-        name: displayName,
+      },
+      update: {},
+      create: {
+        email: email,
+        name: name,
       },
     });
     console.log(user);

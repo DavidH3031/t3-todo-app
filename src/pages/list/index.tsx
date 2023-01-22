@@ -1,18 +1,24 @@
 import type { TodoObject } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoCard from "../../components/TodoCard";
+import { fetchTodoForUser } from "../../server/apiConnection/api";
 
-export async function getServerSideProps() {
-  const todoListObjs = await prisma.todoObject.findMany();
-  return {
-    props: {
-      initialTodos: todoListObjs,
-    },
-  };
-}
-export default function List({ initialTodos }) {
-  const [todos, setTodos] = useState<TodoObject[]>(initialTodos);
+export default function List() {
+  const [todos, setTodos] = useState<TodoObject[]>([]);
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    fetchTodoForUser()
+      .then((todosForUser) => {
+        // setTodos(todosForUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <>
       <Head>
@@ -28,14 +34,11 @@ export default function List({ initialTodos }) {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Your Todo List
           </h1>
+          <p>Current User: {session?.user?.image} </p>
         </div>
         {todos.map((todo) => {
           return (
-            <TodoCard
-              key={todo.authorId}
-              subject={todo.subject}
-              task={todo.task}
-            />
+            <TodoCard key={todo.Id} subject={todo.subject} task={todo.task} />
           );
         })}
       </main>
