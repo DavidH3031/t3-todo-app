@@ -1,14 +1,15 @@
-import type { UserCredential } from "firebase/auth";
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import axios from "axios";
 
-export async function createPrismaUser(fbUser: UserCredential) {
-  const response = await fetch("/api/user", {
-    method: "POST",
-    body: JSON.stringify(fbUser.user),
-  });
+const BASE_URL = "localhost:3000";
 
-  if (!response.ok) {
-    throw new Error(response.statusText);
+export async function fetchTodoForUser() {
+  const response = await axios.get("http://localhost:3000/api/todo");
+
+  if (!response) {
+    throw new Error("Error");
   }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return await response.json();
+  console.log(response.data);
+
+  return response.data;
 }
