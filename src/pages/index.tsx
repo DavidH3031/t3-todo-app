@@ -88,11 +88,11 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const session = await getSession(context);
-  if (session) {
-    return {
-      redirect: { destination: "/list" },
-    };
-  }
+  // if (session) {
+  //   return {
+  //     redirect: { destination: "/list" },
+  //   };
+  // }
   return {
     props: { session },
   };
