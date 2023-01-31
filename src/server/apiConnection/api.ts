@@ -2,7 +2,7 @@
 import axios from "axios";
 import type { Session } from "next-auth";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://dh-todo.netlify.app";
 
 export async function fetchTodoForUser() {
   const response = await axios.get(`${BASE_URL}/api/todo`);
