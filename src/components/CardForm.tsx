@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { TodoObject } from "@prisma/client";
+import type { TodoObject } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { postTodoForUser } from "../server/apiConnection/api";

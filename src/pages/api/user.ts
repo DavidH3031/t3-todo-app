@@ -7,6 +7,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const { email, name } = JSON.parse(req.body);
     const user = await prisma.user.upsert({
       where: {
