@@ -2,10 +2,10 @@
 import axios from "axios";
 import type { Session } from "next-auth";
 
-const BASE_URL = "localhost:3000";
+const BASE_URL = "http://localhost:3000";
 
 export async function fetchTodoForUser() {
-  const response = await axios.get("http://localhost:3000/api/todo");
+  const response = await axios.get(`${BASE_URL}/api/todo`);
 
   if (!response) {
     throw new Error("Error");
@@ -15,7 +15,7 @@ export async function fetchTodoForUser() {
 }
 
 export async function deleteTodoForUser(id: string) {
-  const response = await axios.delete(`http://localhost:3000/api/${id}`);
+  const response = await axios.delete(`${BASE_URL}/api/${id}`);
   console.log("DELETE");
   return response.data;
 }
@@ -27,14 +27,8 @@ export function postTodoForUser(
   },
   session: Session
 ) {
-  return axios.post("http://localhost:3000/api/todo", {
+  return axios.post(`${BASE_URL}/api/todo`, {
     ...newTodo,
     session,
   });
-  // .then((res) => {
-  //   return res.data;
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // });
 }
