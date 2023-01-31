@@ -1,23 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextApiRequest, NextApiResponse } from "next";
+
 import prisma from "../../server/db";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
-    const { email, name } = JSON.parse(req.body);
-    const user = await prisma.user.upsert({
+  if (req.method === "DELETE") {
+    const { id } = req.query;
+    await prisma.todoObject.delete({
       where: {
-        email: email,
-      },
-      update: {},
-      create: {
-        email: email,
-        name: name,
+        Id: id as string,
       },
     });
-    res.status(201).json({ data: user });
+    res.status(200).send({ msg: "Task Deleted" });
   }
 }
