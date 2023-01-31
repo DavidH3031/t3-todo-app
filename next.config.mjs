@@ -14,6 +14,5 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  target: "serverless",
 };
 export default config;
