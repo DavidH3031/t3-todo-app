@@ -67,11 +67,11 @@ export const getServerSideProps = async (
       userEmail: session?.user?.email || "",
     },
   });
-  if (!session) {
-    return {
-      redirect: { destination: "/" },
-    };
-  }
+  // if (!session) {
+  //   return {
+  //     redirect: { destination: "/" },
+  //   };
+  // }
   return {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     props: { UserTodo: JSON.parse(JSON.stringify(todosForUser)) } || {},
