@@ -29,36 +29,39 @@ function Navbar() {
                   Home
                 </a>
               </li>
-              <li>
-                <a
-                  href="#"
-                  onClick={() => {
-                    router.push("/list").catch((err) => {
-                      console.log(err);
-                    });
-                  }}
-                  className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
-                >
-                  List
-                </a>
-              </li>
               {session ? (
-                <li>
-                  <a
-                    href="#"
-                    onClick={() => {
-                      signOut().catch((err) => {
-                        console.log(err);
-                      });
-                    }}
-                    className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
-                  >
-                    Logout
-                  </a>
-                </li>
+                <>
+                  <li>
+                    <a
+                      href="#"
+                      onClick={() => {
+                        router.push("/list").catch((err) => {
+                          console.log(err);
+                        });
+                      }}
+                      className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+                    >
+                      List
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      onClick={() => {
+                        signOut().catch((err) => {
+                          console.log(err);
+                        });
+                      }}
+                      className="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </>
               ) : (
                 <li>
                   <a
+                    href="#"
                     onClick={() => {
                       signIn().catch((err) => {
                         console.log(err);
