@@ -3,9 +3,10 @@ import type { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import { useState } from "react";
-import CardForm from "./../components/CardForm";
-import Navbar from "./../components/Navbar";
-import TodoCard from "./../components/TodoCard";
+import CardForm from "../../components/CardForm";
+import Navbar from "../../components/Navbar";
+import TodoCard from "../../components/TodoCard";
+// import prisma from "../server/db";
 
 export default function List({ UserTodo }: { UserTodo: TodoObject[] }) {
   const [todos, setTodos] = useState<TodoObject[]>([...UserTodo] || []);

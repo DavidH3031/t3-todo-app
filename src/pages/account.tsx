@@ -42,7 +42,7 @@ export const getServerSideProps = async (
   const session = await getSession(context);
   if (!session) {
     return {
-      redirect: { destination: "/login" },
+      redirect: { destination: "/" },
     };
   }
   return {

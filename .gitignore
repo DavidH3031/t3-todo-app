@@ -44,3 +44,5 @@ yarn-error.log*
 /src/server/auth.ts
 # Local Netlify folder
 .netlify
+
+.vercel
