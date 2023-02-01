@@ -21,6 +21,8 @@ function CardForm({ setTodos }: { setTodos: Function }) {
           const newTodoList = [...curr, data];
           return newTodoList;
         });
+        setSubject("");
+        setTask("");
       })
       .catch((err) => {
         console.log(err);
